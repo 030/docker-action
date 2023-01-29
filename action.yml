@@ -1,14 +1,8 @@
 ---
-name: 'Hello World'
-description: 'Greet someone'
 inputs:
   image:
     description: image
     required: true
-outputs:
-  random-number:
-    description: 'Random number'
-    value: ${{ steps.random-number-generator.outputs.random-number }}
 runs:
   using: 'composite'
   steps:
@@ -19,8 +13,7 @@ runs:
       shell: bash
     - run: docker build -t ${{ inputs.image }} .
       shell: bash
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
+    - uses: aquasecurity/trivy-action@master
       with:
         image-ref: ${{ inputs.image }}
         format: 'table'
@@ -28,3 +21,6 @@ runs:
         ignore-unfixed: true
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
+    - uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: Dockerfile
