@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: 030/docker-action@v0.2.0
+      - uses: 030/docker-action@v0.3.0
         with:
           image: utrecht/dive:${{ github.sha }}
 ```
